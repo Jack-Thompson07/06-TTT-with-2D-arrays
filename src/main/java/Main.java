@@ -32,5 +32,6 @@ public class Main {
   public static void main(String[] args) {
     new Player();
     System.out.println("TTT - RAN WITHOUT ERRORS");
+    System.out.println("What the heck");
   }
 }
