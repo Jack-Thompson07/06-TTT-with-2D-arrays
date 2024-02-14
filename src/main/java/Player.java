@@ -9,6 +9,9 @@ public class Player {
   private String[] losses;
   private String[] ties;
 
+  ////////////////////////////////
+  // Constructors
+  ////////////////////////////////
   public Player(String[] data) {
     this.name = data[0];
     this.uuid = data[1];
@@ -35,6 +38,9 @@ public class Player {
     this.ties = new String[] { "null" };
   }
 
+  ////////////////////////////////
+  // Methods
+  ////////////////////////////////
   public String getName() {
     return this.name;
   }

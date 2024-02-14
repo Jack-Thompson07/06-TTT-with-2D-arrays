@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Game {
 
+  public int[][] board; 
   private Player p1;
   private Player p2;
 
@@ -9,19 +10,25 @@ public class Game {
 
   private WinCheck wCheck;
 
+  ////////////////////////////////
+  // Constructor
+  ////////////////////////////////
   public Game(Player p1, Player p2) {
     this.p1 = p1;
     this.p2 = p2;
   }
 
+  ////////////////////////////////
+  // Methods
+  ////////////////////////////////
   public void play3by3() {
-    int[][] board = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+    this.board = new int[][]{ { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 
     playGame(board);
   }
 
   public void play4by4() {
-    int[][] board = { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };
+    this.board = new int[][]{ { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };
 
     playGame(board);
   }

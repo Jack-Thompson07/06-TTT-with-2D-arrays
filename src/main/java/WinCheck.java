@@ -2,6 +2,9 @@ public class WinCheck {
 
   private int[][] state;
 
+  ////////////////////////////////
+  // Methods
+  ////////////////////////////////
   public int getWin(int[][] state) {
     this.state = state;
 

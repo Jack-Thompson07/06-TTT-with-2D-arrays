@@ -12,12 +12,18 @@ public class FileAccessor {
 
   private String placeHolderData = "name,uuid,wins,losses,ties";
 
+  ////////////////////////////////
+  // Constructor
+  ////////////////////////////////
   public FileAccessor(File f) {
     this.f = f;
 
     resetScanner();
   }
 
+  ////////////////////////////////
+  // Methods
+  ////////////////////////////////
   public void resetScanner() {
     try {
       this.s = new Scanner(this.f);
