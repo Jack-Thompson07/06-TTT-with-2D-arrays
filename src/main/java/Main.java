@@ -119,9 +119,7 @@ public class Main {
 
       for(int i = 0; i < playersWithName.length; i ++){
         System.out.println((i + 1) + ") Name:" + playersWithName[i].getName() + " - UUID: " + playersWithName[i].getUUID());
-      }
-       
-      System.out.println();
+      } 
 
       choice = input.nextInt();
 

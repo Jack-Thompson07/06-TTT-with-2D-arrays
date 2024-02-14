@@ -51,7 +51,7 @@ public class FileAccessor{
   public boolean checkNameExists(String name){
     
     for(Player p: players){
-      if(p.getName() == name) return true;
+      if(p.getName().equals(name)) return true;
     }
     return false;
   }
@@ -61,7 +61,7 @@ public class FileAccessor{
     int count = 0;
 
     for(Player p : players){
-      if(p.getName() == name){
+      if(p.getName().equals(name)){
         allWithName[count] = p;
         count ++;
       } 
@@ -74,7 +74,7 @@ public class FileAccessor{
     int count = 0;
 
     for(Player p: players){
-      if(p.getName() == name) count ++;
+      if(p.getName().equals(name)) count ++;
     }
 
     return count;
