@@ -7,8 +7,10 @@ import java.io.File;
 public class FileAccessor{
 
   private File f;
-  private Scanner s =new Scanner(System.in);
+  private Scanner s;
   private Player[] players;
+
+  private String placeHolderData = "name,uuid,wins,losses,ties";
   
   public FileAccessor(File f){
     this.f = f;
@@ -107,6 +109,7 @@ public class FileAccessor{
     try {
 
       FileWriter fw = new FileWriter(this.f);
+      fw.write("name,uuid,wins,losses,ties" + "\n");
 
       for (int i = 0; i < this.players.length; i++) {
         fw.write(this.players[i].getPlayerStats() + "\n");

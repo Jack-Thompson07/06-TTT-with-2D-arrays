@@ -11,4 +11,12 @@ public class Game {
   public void playGame() {
 
   }
+
+  public Player getPlayer1(){
+    return this.p1;
+  }
+
+  public Player getPlayer2(){
+    return this.p2;
+  }
 }

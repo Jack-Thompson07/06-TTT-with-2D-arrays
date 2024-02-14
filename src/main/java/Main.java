@@ -33,10 +33,10 @@ import java.io.File;
 public class Main {
 
 
-  static boolean keepPlaying = true;
+  static boolean keepPlaying = false;
 
   static Scanner input = new Scanner(System.in);
-  static File f = new File("data.csv");
+  static File f = new File("src/main/java/data.csv");
 
   static FileAccessor accessor = new FileAccessor(f);
 
@@ -55,6 +55,8 @@ public class Main {
     while(keepPlaying){
       
     }
+
+    endGame();
   }
 
   public static void startGame(){
@@ -63,6 +65,14 @@ public class Main {
     Player p1 = getPlayer(1, true);
     Player p2 = getPlayer(2, true);
     game = new Game(p1, p2);
+  }
+
+  public static void endGame(){
+
+    accessor.addPlayer(game.getPlayer1());
+    accessor.addPlayer(game.getPlayer2());
+
+    accessor.writeData();
   }
 
   public static Player getPlayer(int whichPlayer, boolean start){
@@ -135,7 +145,7 @@ public class Main {
       name = input.next();
 
       if(choice == 1){
-        player = getExistingPlayer(name, start == false);
+        player = getExistingPlayer(name, start);
       }
       if(choice == 2){
         player = getNewPlayer(name);
