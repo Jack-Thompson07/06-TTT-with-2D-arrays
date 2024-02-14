@@ -1,22 +1,21 @@
-public class WinCheck{
+public class WinCheck {
 
   private int[][] state;
-  
 
-  public int getWin(int[][] state){
+  public int getWin(int[][] state) {
     this.state = state;
 
-    if(tie()) return 3;
+    if (tie())
+      return 3;
 
-    if(vertical(1) || horizontal(1) || diagonal(1)) return 1;
+    if (vertical(1) || horizontal(1) || diagonal(1))
+      return 1;
 
-    if(vertical(2) || horizontal(2) || diagonal(2)) return 2;
+    if (vertical(2) || horizontal(2) || diagonal(2))
+      return 2;
 
     return 0;
   }
-
-
-
 
   public boolean vertical(int num) {
     for (int i = 0; i < state[0].length; i++) {
@@ -66,17 +65,19 @@ public class WinCheck{
     return false;
   }
 
-  public boolean tie(){
+  public boolean tie() {
     int count = 0;
 
-    for(int[] i : this.state){
-      for(int j : i){
-        if(j != 0) count ++;
+    for (int[] i : this.state) {
+      for (int j : i) {
+        if (j != 0)
+          count++;
       }
     }
 
-    if(count == Math.pow(this.state.length, 2)) return true;
+    if (count == Math.pow(this.state.length, 2))
+      return true;
     return false;
   }
-  
+
 }

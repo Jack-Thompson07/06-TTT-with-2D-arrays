@@ -4,15 +4,15 @@ import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.File;
 
-public class FileAccessor{
+public class FileAccessor {
 
   private File f;
   private Scanner s;
   private Player[] players;
 
   private String placeHolderData = "name,uuid,wins,losses,ties";
-  
-  public FileAccessor(File f){
+
+  public FileAccessor(File f) {
     this.f = f;
 
     resetScanner();
@@ -48,42 +48,58 @@ public class FileAccessor{
     }
   }
 
-  public boolean checkNameExists(String name){
-    
-    for(Player p: players){
-      if(p.getName().equals(name)) return true;
+  public boolean checkNameExists(String name) {
+
+    for (Player p : players) {
+      if (p.getName().equals(name))
+        return true;
     }
     return false;
   }
 
-  public Player[] getAllWithName(String name){
+  public Player[] getAllWithName(String name) {
     Player[] allWithName = new Player[getHowManyWithName(name)];
     int count = 0;
 
-    for(Player p : players){
-      if(p.getName().equals(name)){
+    for (Player p : players) {
+      if (p.getName().equals(name)) {
         allWithName[count] = p;
-        count ++;
-      } 
+        count++;
+      }
     }
 
     return allWithName;
   }
 
-  public int getHowManyWithName(String name){
+  public Player getWithUUID(String uuid) {
+    Player player = null;
     int count = 0;
 
-    for(Player p: players){
-      if(p.getName().equals(name)) count ++;
+    for (Player p : players) {
+      if (p.getName().equals(uuid)) {
+        player = p;
+        count++;
+      }
+    }
+
+    return player;
+  }
+
+  public int getHowManyWithName(String name) {
+    int count = 0;
+
+    for (Player p : players) {
+      if (p.getName().equals(name))
+        count++;
     }
 
     return count;
   }
 
-  public void addPlayer(Player p){
+  public void addPlayer(Player p) {
     Player[] newPlayers = new Player[players.length + 1];
 
-    for(int i = 0; i < players.length; i ++){
+    for (int i = 0; i < players.length; i++) {
       newPlayers[i] = players[i];
     }
     newPlayers[newPlayers.length - 1] = p;
@@ -91,7 +107,7 @@ public class FileAccessor{
     this.players = newPlayers;
   }
 
-  public void removePlayer(Player p){
+  public void removePlayer(Player p) {
     Player[] newPlayers = new Player[this.players.length - 1];
     int count = 0;
     for (int i = 0; i < this.players.length; i++) {
@@ -104,7 +120,7 @@ public class FileAccessor{
     this.players = newPlayers;
   }
 
-  public void writeData(){
+  public void writeData() {
     try {
 
       FileWriter fw = new FileWriter(this.f);

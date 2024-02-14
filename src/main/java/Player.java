@@ -30,9 +30,9 @@ public class Player {
     this.name = name;
     this.uuid = UUID.randomUUID().toString();
 
-    this.wins = new String[]{"null"};
-    this.losses = new String[]{"null"};
-    this.ties = new String[]{"null"};
+    this.wins = new String[] { "null" };
+    this.losses = new String[] { "null" };
+    this.ties = new String[] { "null" };
   }
 
   public String getName() {
@@ -43,46 +43,49 @@ public class Player {
     return this.uuid;
   }
 
-  public void addWin(String opponentUUID){
-    if(this.wins[0].equals("null")) this.wins[0] = opponentUUID;
+  public void addWin(String opponentUUID) {
+    if (this.wins[0].equals("null"))
+      this.wins[0] = opponentUUID;
 
-    else{
+    else {
       String[] newWins = new String[wins.length + 1];
 
-      for(int i = 0; i < wins.length; i ++){
+      for (int i = 0; i < wins.length; i++) {
         newWins[i] = wins[i];
       }
-      newWins[newWins.length -1 ] = opponentUUID;
+      newWins[newWins.length - 1] = opponentUUID;
 
       this.wins = newWins;
     }
   }
 
-  public void addLoss(String opponentUUID){
-    if(this.losses[0].equals("null")) this.losses[0] = opponentUUID;
+  public void addLoss(String opponentUUID) {
+    if (this.losses[0].equals("null"))
+      this.losses[0] = opponentUUID;
 
-    else{
+    else {
       String[] newLosses = new String[losses.length + 1];
 
-      for(int i = 0; i < losses.length; i ++){
+      for (int i = 0; i < losses.length; i++) {
         newLosses[i] = losses[i];
       }
-      newLosses[newLosses.length -1 ] = opponentUUID;
+      newLosses[newLosses.length - 1] = opponentUUID;
 
       this.losses = newLosses;
     }
   }
 
-  public void addTie(String opponentUUID){
-    if(this.ties[0].equals("null")) this.ties[0] = opponentUUID;
+  public void addTie(String opponentUUID) {
+    if (this.ties[0].equals("null"))
+      this.ties[0] = opponentUUID;
 
-    else{
+    else {
       String[] newTies = new String[ties.length + 1];
 
-      for(int i = 0; i < ties.length; i ++){
+      for (int i = 0; i < ties.length; i++) {
         newTies[i] = ties[i];
       }
-      newTies[newTies.length -1 ] = opponentUUID;
+      newTies[newTies.length - 1] = opponentUUID;
 
       this.ties = newTies;
     }
@@ -115,4 +118,83 @@ public class Player {
     return this.name + "," + this.uuid + "," + allWins + "," + allLosses + "," + allTies;
   }
 
+  public void displayStats() {
+    int totalWins = 0;
+    int totalLosses = 0;
+    int totalTies = 0;
+    Player p;
+
+    if (this.wins[0].equals("null") == false) {
+      totalWins = this.wins.length;
+    }
+    if (this.losses[0].equals("null") == false) {
+      totalLosses = this.losses.length;
+    }
+    if (this.ties[0].equals("null") == false) {
+      totalTies = this.ties.length;
+    }
+
+    System.out.println();
+    System.out.println("Name: " + this.name);
+    System.out.println("UUID: " + this.uuid);
+    System.out.println();
+    System.out.println("Total wins: " + totalWins);
+
+    System.out.println("Wins agains:");
+    if (totalWins > 0) {
+      for (String i : this.wins) {
+        p = Main.accessor.getWithUUID(i);
+
+        if (p == null) {
+          if (Main.game.getPlayer1() == this) {
+            p = Main.game.getPlayer2();
+          } else {
+            p = Main.game.getPlayer1();
+          }
+        }
+
+        System.out.println("  " + p.getName() + " - " + p.getUUID());
+      }
+    }
+    System.out.println();
+    System.out.println("Total losses: " + totalLosses);
+
+    System.out.println("Losses agains:");
+    if (totalLosses > 0) {
+      for (String i : this.losses) {
+        p = Main.accessor.getWithUUID(i);
+
+        if (p == null) {
+          if (Main.game.getPlayer1() == this) {
+            p = Main.game.getPlayer2();
+          } else {
+            p = Main.game.getPlayer1();
+          }
+        }
+
+        System.out.println("  " + p.getName() + " - " + p.getUUID());
+      }
+    }
+    System.out.println();
+    System.out.println("Tototal ties" + totalTies);
+
+    System.out.println("Ties agains:");
+    if (totalTies > 0) {
+      for (String i : this.ties) {
+        p = Main.accessor.getWithUUID(i);
+
+        if (p == null) {
+          if (Main.game.getPlayer1() == this) {
+            p = Main.game.getPlayer2();
+          } else {
+            p = Main.game.getPlayer1();
+          }
+        }
+
+        System.out.println("  " + p.getName() + " - " + p.getUUID());
+      }
+    }
+    System.out.println();
+    System.out.println();
+  }
 }

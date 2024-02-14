@@ -20,7 +20,8 @@ For the future and more points above an A-...
 
 
 For more in the future and more awesomer...
-1) You can have a text file documenting player win-loss records and another stat of your choice
+1) You can have a text file documenting player win-loss records and another stat of your choice2
+
 2) You can have a 3rd or 4th player
 3) You can have a 3rd dimension to the game
 4) You can make a new class for a game session as well as a single game
@@ -32,7 +33,6 @@ import java.io.File;
 
 public class Main {
 
-
   static boolean keepPlaying = true;
 
   static Scanner input = new Scanner(System.in);
@@ -43,23 +43,20 @@ public class Main {
   static Game game;
 
   public static void main(String[] args) {
-    runGame();  
+    runGame();
   }
 
-
-
-
-  public static void runGame(){
+  public static void runGame() {
     startGame();
 
-    while(keepPlaying){
+    while (keepPlaying) {
       menuOptions();
     }
 
     endGame();
   }
 
-  public static void startGame(){
+  public static void startGame() {
     accessor.storeData();
 
     Player p1 = getPlayer(1, true);
@@ -67,7 +64,7 @@ public class Main {
     game = new Game(p1, p2);
   }
 
-  public static void endGame(){
+  public static void endGame() {
 
     accessor.addPlayer(game.getPlayer1());
     accessor.addPlayer(game.getPlayer2());
@@ -75,8 +72,10 @@ public class Main {
     accessor.writeData();
   }
 
-  public static void menuOptions(){
+  public static void menuOptions() {
     int choice = -1;
+
+    space();
 
     System.out.println("Player 1: " + game.getPlayer1().getName());
     System.out.println("Player 2: " + game.getPlayer2().getName());
@@ -90,118 +89,170 @@ public class Main {
     System.out.println("0) Quit");
 
     choice = input.nextInt();
-    
-    if(choice == 1){
+
+    if (choice == 1) {
       game.play3by3();
 
     }
 
-    if(choice == 2){
+    if (choice == 2) {
       game.play4by4();
     }
 
-    if(choice == 4){
+    if (choice == 3) {
+      space();
+      System.out.println("Player 1:");
+      game.getPlayer1().displayStats();
+      System.out.println();
+      System.out.println("Player 2:");
+      game.getPlayer2().displayStats();
+      System.out.println();
+      System.out.println("1) Continue");
+      input.next();
+    }
+
+    if (choice == 4) {
       Player player = getPlayer(1, false);
-      if(player != null) {
+      if (player != null) {
         accessor.addPlayer(game.getPlayer1());
         game.changePlayer1(player);
       }
     }
 
-    if(choice == 5){
+    if (choice == 5) {
       Player player = getPlayer(2, false);
-      if(player != null) {
+      if (player != null) {
         accessor.addPlayer(game.getPlayer2());
         game.changePlayer2(player);
       }
     }
 
-    if(choice == 0){
+    if (choice == 0) {
       keepPlaying = false;
     }
   }
 
-  public static Player getPlayer(int whichPlayer, boolean start){
+  public static Player getPlayer(int whichPlayer, boolean start) {
     Player player = null;
 
     int choice = -1;
 
-    System.out.print("You need to make a ");
-    if(whichPlayer == 1) System.out.println("first player:");
-    else System.out.println("second player:");
-    System.out.println("It is a new or existing player?");
-    System.out.println("1) New");
-    System.out.println("2) existing");
-    if(start == false) System.out.println("0) Cancel");
+    while ((start == false && choice < 0) || (start && choice < 1) || choice > 2) {
+      space();
 
-    choice = input.nextInt();
-    if(choice == 0 && start == false) return null;
+      System.out.print("You need to make a ");
+      if (whichPlayer == 1)
+        System.out.println("first player:");
+      else
+        System.out.println("second player:");
+      System.out.println("It is a new or existing player?");
+      System.out.println("1) New");
+      System.out.println("2) existing");
+      if (start == false)
+        System.out.println("0) Cancel");
 
-    String name;
-    System.out.println("What is your name?");
-    name = input.next();
-
-    if(choice == 1){
-      player = getNewPlayer(name);
+      choice = input.nextInt();
     }
-    else if(choice == 2){
+
+    if (choice == 0 && start == false)
+      return null;
+
+    space();
+
+    System.out.println("What is your name?");
+    String name = input.next();
+
+    if (choice == 1) {
+      player = getNewPlayer(name);
+    } else if (choice == 2) {
       player = getExistingPlayer(name, start);
     }
 
-    
     return player;
 
   }
 
-  public static Player getNewPlayer(String name){
-    return new Player(name);
+  public static Player getNewPlayer(String name) {
+    space();
+    Player player = new Player(name);
+    System.out.println("Here is your UUID (REMEBER IT): " + player.getUUID());
+    System.out.println("1) Continue");
+    input.next();
+    return player;
   }
 
-  public static Player getExistingPlayer(String name, Boolean start){
-    Player player = null; 
+  public static Player getExistingPlayer(String name, Boolean start) {
+    Player player = null;
 
-    if(accessor.checkNameExists(name)){
+    if (accessor.checkNameExists(name)) {
       int choice = -1;
       Player[] playersWithName = accessor.getAllWithName(name);
 
-      System.out.println("Which one is you");
+      while ((start == false && choice < 0) || (start && choice < 1) || choice > accessor.getHowManyWithName(name)) {
+        space();
 
-      for(int i = 0; i < playersWithName.length; i ++){
-        System.out.println((i + 1) + ") Name:" + playersWithName[i].getName() + " - UUID: " + playersWithName[i].getUUID());
-      }  
+        System.out.println("Which one is you");
 
-      choice = input.nextInt();
+        for (int i = 0; i < playersWithName.length; i++) {
+          System.out
+              .println((i + 1) + ") Name:" + playersWithName[i].getName() + " - UUID: " + playersWithName[i].getUUID());
+        }
+        if (start == false)
+          System.out.println("0) Cancel");
+
+        choice = input.nextInt();
+      }
+
+      if (choice == 0 && start)
+        return null;
 
       player = playersWithName[choice - 1];
-
       accessor.removePlayer(player);
+
+      space();
+
+      System.out.println("Here is your UUID (REMEBER IT): " + player.getUUID());
+
+      System.out.println("1) Continue");
+      input.next();
     }
 
-    else{
+    else {
       int choice = -1;
 
-      System.out.println("There are no existing players with this name, what would you like to do?");
-      System.out.println("1) Enter a different name");
-      System.out.println("2) Create a new Player with this name");
-      if(start  == false) System.out.println("0) Cancel");
+      while ((start == false && choice < 0) || (start && choice < 1) || choice > 2) {
+        space();
 
-      choice = input.nextInt();
+        System.out.println("There are no existing players with this name, what would you like to do?");
+        System.out.println("1) Enter a different name");
+        System.out.println("2) Create a new Player with this name");
+        if (start == false)
+          System.out.println("0) Cancel");
 
+        choice = input.nextInt();
+      }
 
-      if(choice == 0 && start) return null;
+      if (choice == 0 && start)
+        return null;
 
+      if (choice == 1) {
+        space();
 
-      if(choice == 1){
         System.out.println("What is your name?");
-      name = input.next();
+        name = input.next();
         player = getExistingPlayer(name, start);
       }
-      if(choice == 2){
+      if (choice == 2) {
         player = getNewPlayer(name);
       }
     }
 
-
     return player;
+  }
+
+  public static void space() {
+    for (int i = 0; i < 50; i++) {
+      System.out.println();
+    }
   }
 }
