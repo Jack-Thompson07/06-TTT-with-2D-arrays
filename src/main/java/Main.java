@@ -27,11 +27,122 @@ For more in the future and more awesomer...
 5) You can make a new class for a turn, or a piece, or a screen painter
 */
 
+import java.util.Scanner;
+import java.io.File;
 
 public class Main {
+
+
+  static boolean keepPlaying = true;
+
+  static Scanner input = new Scanner(System.in);
+  static File f = new File("data.csv");
+
+  static FileAccessor accessor = new FileAccessor(f);
+
+  static Game game;
+
   public static void main(String[] args) {
-    new Player();
-    System.out.println("TTT - RAN WITHOUT ERRORS");
-    System.out.println("YAY");
+    runGame();  
+  }
+
+
+
+
+  public static void runGame(){
+    startGame();
+
+    while(keepPlaying){
+      
+    }
+  }
+
+  public static void startGame(){
+    accessor.storeData();
+
+    Player p1 = getPlayer(1, true);
+    Player p2 = getPlayer(2, true);
+    game = new Game(p1, p2);
+  }
+
+  public static Player getPlayer(int whichPlayer, boolean start){
+    Player player = null;
+
+    int choice = -1;
+
+    System.out.println("Are you a new or returning player?");
+    System.out.println("1) New");
+    System.out.println("2) returning");
+    if(start == false) System.out.println("0) Cancel");
+
+    choice = input.nextInt();
+    if(choice == 0 && start == false) return null;
+
+    String name;
+    System.out.println("What is your name?");
+    name = input.next();
+
+    if(choice == 1){
+      player = getNewPlayer(name);
+    }
+    else if(choice == 2){
+      player = getExistingPlayer(name, start);
+    }
+
+    
+    return player;
+
+  }
+
+  public static Player getNewPlayer(String name){
+    return new Player(name);
+  }
+
+  public static Player getExistingPlayer(String name, Boolean start){
+    Player player = null; 
+
+    if(accessor.checkNameExists(name)){
+      int choice = -1;
+      Player[] playersWithName = accessor.getAllWithName(name);
+
+      System.out.println("Which one is you");
+
+      for(int i = 0; i < playersWithName.length; i ++){
+        System.out.println((i + 1) + ") Name:" + playersWithName[i].getName() + " - UUID: " + playersWithName[i].getUUID());
+      }
+       
+      System.out.println();
+
+      choice = input.nextInt();
+
+      player = playersWithName[choice - 1];
+    }
+
+    else{
+      int choice = -1;
+
+      System.out.println("There are no existing players with this name, what would you like to do?");
+      System.out.println("1) Enter a different name");
+      System.out.println("2) Create a new Player with this name");
+      if(start  == false) System.out.println("0) Cancel");
+
+      choice = input.nextInt();
+
+
+      if(choice == 0 && start) return null;
+
+      System.out.println("What is your name?");
+      name = input.next();
+
+      if(choice == 1){
+        player = getExistingPlayer(name, start == false);
+      }
+      if(choice == 2){
+        player = getNewPlayer(name);
+      }
+    }
+
+
+    return player;
   }
 }
