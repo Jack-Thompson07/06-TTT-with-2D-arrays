@@ -5,6 +5,9 @@ public class WinCheck {
   ////////////////////////////////
   // Methods
   ////////////////////////////////
+
+  // Checks the current state of the game board for any win conditions and returns
+  // the result.
   public int getWin(int[][] state) {
     this.state = state;
 
@@ -20,6 +23,7 @@ public class WinCheck {
     return 0;
   }
 
+  // Checks if there is a vertical win for a given player number.
   public boolean vertical(int num) {
     for (int i = 0; i < state[0].length; i++) {
       boolean yes = true;
@@ -33,6 +37,7 @@ public class WinCheck {
     return false;
   }
 
+  // Checks if there is a horizontal win for a given player number.
   public boolean horizontal(int num) {
     for (int i = 0; i < state.length; i++) {
       boolean yes = true;
@@ -46,6 +51,7 @@ public class WinCheck {
     return false;
   }
 
+  // Checks if there is a diagonal win for a given player number.
   public boolean diagonal(int num) {
     boolean yes = true;
     for (int i = 0; i < state.length; i++) {
@@ -68,6 +74,7 @@ public class WinCheck {
     return false;
   }
 
+  // Checks if the current game board is in a tie state.
   public boolean tie() {
     int count = 0;
 

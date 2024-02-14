@@ -24,6 +24,8 @@ public class FileAccessor {
   ////////////////////////////////
   // Methods
   ////////////////////////////////
+
+  // Resets the scanner to read from the beginning of the file.
   public void resetScanner() {
     try {
       this.s = new Scanner(this.f);
@@ -32,6 +34,8 @@ public class FileAccessor {
     }
   }
 
+  // Calculates the number of lines in the file. return The number of lines in the
+  // file.
   public int getNumLines() {
     resetScanner();
 
@@ -44,6 +48,7 @@ public class FileAccessor {
     return count;
   }
 
+  // Reads data from the file and stores it in Player objects array.
   public void storeData() {
     this.players = new Player[getNumLines() - 1];
 
@@ -54,6 +59,9 @@ public class FileAccessor {
     }
   }
 
+  // Checks if a player with the given name exists in the stored data. param name
+  // The name of the player to check. return True if the player exists, false
+  // otherwise.
   public boolean checkNameExists(String name) {
 
     for (Player p : players) {
@@ -63,6 +71,9 @@ public class FileAccessor {
     return false;
   }
 
+  // Retrieves all players with the given name from the stored data. param name
+  // The name of the players to retrieve. return An array of Player objects with
+  // the given name.
   public Player[] getAllWithName(String name) {
     Player[] allWithName = new Player[getHowManyWithName(name)];
     int count = 0;
@@ -77,6 +88,8 @@ public class FileAccessor {
     return allWithName;
   }
 
+  // Retrieves a player with the given UUID from the stored data. Param uuid The
+  // UUID of the player to retrieve. Return The Player object with the given UUID.
   public Player getWithUUID(String uuid) {
     Player player = null;
     int count = 0;
@@ -91,6 +104,7 @@ public class FileAccessor {
     return player;
   }
 
+  // returns how many players there are with the name
   public int getHowManyWithName(String name) {
     int count = 0;
 
@@ -102,6 +116,7 @@ public class FileAccessor {
     return count;
   }
 
+  // adds the Player in the parameter to the list of players
   public void addPlayer(Player p) {
     Player[] newPlayers = new Player[players.length + 1];
 
@@ -113,6 +128,7 @@ public class FileAccessor {
     this.players = newPlayers;
   }
 
+  // removes the player in the parameter from the list of players
   public void removePlayer(Player p) {
     Player[] newPlayers = new Player[this.players.length - 1];
     int count = 0;
@@ -126,6 +142,7 @@ public class FileAccessor {
     this.players = newPlayers;
   }
 
+  // writes all of the players in the player string into the csv file
   public void writeData() {
     try {
 

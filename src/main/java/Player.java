@@ -41,14 +41,18 @@ public class Player {
   ////////////////////////////////
   // Methods
   ////////////////////////////////
+
+  // returns the players name
   public String getName() {
     return this.name;
   }
 
+  // returns the players uuid
   public String getUUID() {
     return this.uuid;
   }
 
+  // adds a win, using the uuid of the opponent
   public void addWin(String opponentUUID) {
     if (this.wins[0].equals("null"))
       this.wins[0] = opponentUUID;
@@ -65,6 +69,7 @@ public class Player {
     }
   }
 
+  // adds a loss, using the uuid of the opponent
   public void addLoss(String opponentUUID) {
     if (this.losses[0].equals("null"))
       this.losses[0] = opponentUUID;
@@ -81,6 +86,7 @@ public class Player {
     }
   }
 
+  // adds a tie, using the uuid of the opponent
   public void addTie(String opponentUUID) {
     if (this.ties[0].equals("null"))
       this.ties[0] = opponentUUID;
@@ -97,6 +103,7 @@ public class Player {
     }
   }
 
+  // gets all of the players stats on a single line to be written to the csv file
   public String getPlayerStats() {
     String allWins = "";
     String allLosses = "";
@@ -124,6 +131,8 @@ public class Player {
     return this.name + "," + this.uuid + "," + allWins + "," + allLosses + "," + allTies;
   }
 
+  // prints out all of the players stats like their name, uuid, wins, losses,
+  // ties, and who they won, lost, and tied against
   public void displayStats() {
     int totalWins = 0;
     int totalLosses = 0;

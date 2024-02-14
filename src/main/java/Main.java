@@ -1,4 +1,11 @@
+// Jack Thompson
+// TTT with 2D arrays
+// 2/14/24
+// p6
+
+
 /*
+
 This project must play Tic-Tac-Toe.
 
 
@@ -26,12 +33,21 @@ For more in the future and more awesomer...
 3) You can have a 3rd dimension to the game
 4) You can make a new class for a game session as well as a single game
 5) You can make a new class for a turn, or a piece, or a screen painter
+
+
+What I did:
+I made it so it can acces a csv file with players storing wins losses and ties. 
+You can chose between playing a 3by3 or 4by4 game
+You can change players anytime.
+You can See the players stats at anytime
 */
 
 import java.util.Scanner;
 import java.io.File;
 
 public class Main {
+
+  public static final int[][] STATE = new int[3][3];
 
   static boolean keepPlaying = true;
 
@@ -46,6 +62,7 @@ public class Main {
     runGame();
   }
 
+  // Runs the game by starting it, displaying menu options, and ending the game.
   public static void runGame() {
     startGame();
 
@@ -56,6 +73,8 @@ public class Main {
     endGame();
   }
 
+  // Initializes the game by storing data, getting players, and creating a new
+  // game instance.
   public static void startGame() {
     accessor.storeData();
 
@@ -64,6 +83,7 @@ public class Main {
     game = new Game(p1, p2);
   }
 
+  // Ends the game by adding players to the data file and writing data.
   public static void endGame() {
 
     accessor.addPlayer(game.getPlayer1());
@@ -72,6 +92,8 @@ public class Main {
     accessor.writeData();
   }
 
+  // Displays menu options for the players and performs corresponding actions
+  // based on player choice.
   public static void menuOptions() {
     int choice = -1;
 
@@ -91,7 +113,7 @@ public class Main {
     choice = input.nextInt();
 
     if (choice == 1) {
-      game.play3by3();
+      game.play3by3(STATE);
 
     }
 
@@ -132,6 +154,8 @@ public class Main {
     }
   }
 
+  // Gets the player information based on whether it is a new or existing player
+  // for the given whichPlayer.
   public static Player getPlayer(int whichPlayer, boolean start) {
     Player player = null;
 
@@ -172,6 +196,7 @@ public class Main {
 
   }
 
+  // Creates a new player with the given name and displays the UUID.
   public static Player getNewPlayer(String name) {
     space();
     Player player = new Player(name);
@@ -181,6 +206,8 @@ public class Main {
     return player;
   }
 
+  // Gets an existing player based on the given name and existing players data, or
+  // prompts to create a new player.
   public static Player getExistingPlayer(String name, Boolean start) {
     Player player = null;
 
@@ -250,6 +277,7 @@ public class Main {
     return player;
   }
 
+  // Adds empty space for formatting purposes.
   public static void space() {
     for (int i = 0; i < 50; i++) {
       System.out.println();
