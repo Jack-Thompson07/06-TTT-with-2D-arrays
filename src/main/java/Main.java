@@ -33,7 +33,7 @@ import java.io.File;
 public class Main {
 
 
-  static boolean keepPlaying = false;
+  static boolean keepPlaying = true;
 
   static Scanner input = new Scanner(System.in);
   static File f = new File("src/main/java/data.csv");
@@ -53,7 +53,7 @@ public class Main {
     startGame();
 
     while(keepPlaying){
-      
+      menuOptions();
     }
 
     endGame();
@@ -75,14 +75,63 @@ public class Main {
     accessor.writeData();
   }
 
+  public static void menuOptions(){
+    int choice = -1;
+
+    System.out.println("Player 1: " + game.getPlayer1().getName());
+    System.out.println("Player 2: " + game.getPlayer2().getName());
+    System.out.println();
+    System.out.println("What would you like to do:");
+    System.out.println("1) Play a 3 by 3 game");
+    System.out.println("2) Play a 4 by 4 game");
+    System.out.println("3) View current players stats");
+    System.out.println("4) Change Player 1");
+    System.out.println("5) Change Player 2");
+    System.out.println("0) Quit");
+
+    choice = input.nextInt();
+    
+    if(choice == 1){
+      game.play3by3();
+
+    }
+
+    if(choice == 2){
+      game.play4by4();
+    }
+
+    if(choice == 4){
+      Player player = getPlayer(1, false);
+      if(player != null) {
+        accessor.addPlayer(game.getPlayer1());
+        game.changePlayer1(player);
+      }
+    }
+
+    if(choice == 5){
+      Player player = getPlayer(2, false);
+      if(player != null) {
+        accessor.addPlayer(game.getPlayer2());
+        game.changePlayer2(player);
+      }
+    }
+
+    if(choice == 0){
+      keepPlaying = false;
+    }
+  }
+
   public static Player getPlayer(int whichPlayer, boolean start){
     Player player = null;
 
     int choice = -1;
 
-    System.out.println("Are you a new or returning player?");
+    System.out.print("You need to make a ");
+    if(whichPlayer == 1) System.out.println("first player:");
+    else System.out.println("second player:");
+    System.out.println("It is a new or existing player?");
     System.out.println("1) New");
-    System.out.println("2) returning");
+    System.out.println("2) existing");
     if(start == false) System.out.println("0) Cancel");
 
     choice = input.nextInt();
@@ -124,6 +173,8 @@ public class Main {
       choice = input.nextInt();
 
       player = playersWithName[choice - 1];
+
+      accessor.removePlayer(player);
     }
 
     else{
@@ -139,10 +190,10 @@ public class Main {
 
       if(choice == 0 && start) return null;
 
-      System.out.println("What is your name?");
-      name = input.next();
 
       if(choice == 1){
+        System.out.println("What is your name?");
+      name = input.next();
         player = getExistingPlayer(name, start);
       }
       if(choice == 2){

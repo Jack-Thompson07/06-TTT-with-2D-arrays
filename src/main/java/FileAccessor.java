@@ -92,16 +92,15 @@ public class FileAccessor{
   }
 
   public void removePlayer(Player p){
-    Player[] newPlayers = new Player[players.length - 1];
+    Player[] newPlayers = new Player[this.players.length - 1];
     int count = 0;
-
-    for(int i = 0; i < newPlayers.length; i++){
-      if(players[i - count] == p) count ++;
-      else{
-        newPlayers[i] = players[i-count];
+    for (int i = 0; i < this.players.length; i++) {
+      if (this.players[i] == p) {
+        count++;
+      } else {
+        newPlayers[i - count] = this.players[i];
       }
     }
-
     this.players = newPlayers;
   }
 
